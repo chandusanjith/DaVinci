@@ -10,7 +10,6 @@ from rest_framework import parsers
 from django.core import serializers
 
 from .models import *
-from .serializers import *
 
 from datetime import date
 
