@@ -36,20 +36,15 @@ def horoscope_info(sign, day, tz=None):
     print(22)
     base_url = "http://astrology.kudosmedia.net/m/"
     payload = {'day': str(day)}
-    print(11)
     data = requests.get(str(base_url) + str(sign), params=payload)
     soup = BeautifulSoup(str(data.content), 'lxml')
-    print(1)
     date_range = str(soup.find("td", {"style": "vertical-align:middle;"}).text) \
         .partition("\\n\\t\\t\\t\\t\\t\\n\\t\\t\\t\\t\\t")[2] \
         .partition("\\t\\t\\t\\t")[0]
-    print(2)
     current_date = soup.find(
         "p", {"style": "font-weight: bold; color: #336699;"}) \
         .text.partition(":")[2].replace("\\t", "")
-    print(3)
     description = soup.find("p", {"style": "color: #333333;"}).text.replace("\\", "")
-    print(4)
     details = soup.find(
         "ul",
         {"style": "margin: 0pt; padding: 0px; list-style-type: none;"
@@ -71,5 +66,4 @@ def horoscope_info(sign, day, tz=None):
         'lucky_number': str(lucky_number),
         'lucky_time': str(lucky_time)
     }
-    print(horoscope_data)
     return horoscope_data

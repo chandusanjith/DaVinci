@@ -28,9 +28,7 @@ class Horoscope(APIView):
     try:
         if (sign not in signs) or (day not in days):
             return Response({"ERROR":"Improper sign or day"}, status=status.HTTP_404_NOT_FOUND)
-        print("qwertyuiop")
         response = horoscope_info(sign=sign, day=day, tz=timezone)
         return Response(response, status=status.HTTP_200_OK)
     except Exception as e:
-        print(e)
         return Response({"ERROR":"OOps! something went wrong!!"}, status=status.HTTP_404_NOT_FOUND)
