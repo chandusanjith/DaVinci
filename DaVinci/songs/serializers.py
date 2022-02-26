@@ -13,3 +13,26 @@ class AlbumSerializer(serializers.ModelSerializer):
       device_key = self.context.get("device_key")
       mapped_key = DeviceAuth.objects.get(device_key = device_key)
       return mapped_key.mapped_key
+
+class SongsSerializer(serializers.ModelSerializer):
+    auth_key = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Albums
+        fields = ('id','album','song_image','song_name','artist','media_file','song_url','created_on','updated_on','auth_key')
+
+    def get_Auth_key(self,request):
+      device_key = self.context.get("device_key")
+      mapped_key = DeviceAuth.objects.get(device_key = device_key)
+      return mapped_key.mapped_key
+
+
+class SongsLyricsSerializer(serializers.ModelSerializer):
+    auth_key = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Albums
+        fields = ('id','album','song_lyric_image','song_name','artist','lyrics','created_on','updated_on','auth_key')
+
+    def get_Auth_key(self,request):
+      device_key = self.context.get("device_key")
+      mapped_key = DeviceAuth.objects.get(device_key = device_key)
+      return mapped_key.mapped_key

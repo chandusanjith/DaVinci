@@ -28,3 +28,38 @@ class Albums(APIView):
     else:
       return Response({"ERROR":"Access Denied"}, status=status.HTTP_404_NOT_FOUND)
   
+class Songs(APIView):
+  parser_classes = (parsers.MultiPartParser, parsers.FormParser,) 
+  serializer_class = SongsSerializer
+
+  def get(self,request,album_id,device_auth,format=None):
+    if auth_required(device_auth) == True:
+      album = Albums.objects.get(id=album_id)
+      songs = Songs.objects.filter(album=album)
+      if not songs:
+        return Response({
+          "ERROR":"404 NO DATA FOUND :("}, status=status.HTTP_404_NOT_FOUND)
+      songs_serializer = SongsSerializer(songs, many=True,context={'device_key': device_auth}
+).data
+      return Response(songs_serializer, status=status.HTTP_200_OK)
+    else:
+      return Response({"ERROR":"Access Denied"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+class SongLyrics(APIView):
+  parser_classes = (parsers.MultiPartParser, parsers.FormParser,) 
+  serializer_class = SongsLyricsSerializer
+
+  def get(self,request,album_id,device_auth,format=None):
+    if auth_required(device_auth) == True:
+      album = Albums.objects.get(id=album_id)
+      song_lyrics = SongLyrics.objects.filter(album=album)
+      if not song_lyrics:
+        return Response({
+          "ERROR":"404 NO DATA FOUND :("}, status=status.HTTP_404_NOT_FOUND)
+      songs_lyrics_serializer = SongsLyricsSerializer(songs, many=True,context={'device_key': device_auth}
+).data
+      return Response(songs_lyrics_serializer, status=status.HTTP_200_OK)
+    else:
+      return Response({"ERROR":"Access Denied"}, status=status.HTTP_404_NOT_FOUND)
