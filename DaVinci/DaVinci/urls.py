@@ -22,6 +22,7 @@ from django.conf import settings
 from rest_framework.urlpatterns import format_suffix_patterns
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.urls import include, re_path
 
 
 schema_view = get_schema_view(
@@ -39,11 +40,12 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('docs/', include_docs_urls(title='Todo Api')),
-    path('redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    re_path(r'^playground/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path(r'^docs/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('DaVinci/ApiV1/Authentication/', include('authentication.urls')),
     path('DaVinci/ApiV1/Horoscope/', include('horoscope.urls')),
     path('DaVinci/ApiV1/Songs/', include('songs.urls')),
     path('DaVinci/ApiV1/Mantras/', include('mantras.urls')),
+    path('DaVinci/ApiV1/Initializer/', include('initializer.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 urlpatterns = format_suffix_patterns(urlpatterns)
