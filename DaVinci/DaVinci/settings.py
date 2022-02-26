@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-cg_*8#ijqkeeq(j)wi^)oz-wk8)h0m1r$lot75c_@73mw5zn8e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['davinci.chandusanjith.repl.co']
-CSRF_TRUSTED_ORIGINS = ['https://davinci.chandusanjith.repl.co']
+ALLOWED_HOSTS = ['davinci.pythonanywhere.com']
+CSRF_TRUSTED_ORIGINS = ['https://davinci.pythonanywhere.com']
 
 # Application definition
 
