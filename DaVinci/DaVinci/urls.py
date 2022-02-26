@@ -42,4 +42,5 @@ urlpatterns = [
     path('redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('DaVinci/ApiV1/Authentication/', include('authentication.urls')),
     path('DaVinci/ApiV1/Horoscope/', include('horoscope.urls')),
+    patg('DaVinci/ApiV1/Songs/', include('songs.urls')),
 ]
