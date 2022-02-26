@@ -10,8 +10,9 @@ from rest_framework import parsers
 from django.core import serializers
 from .serializers import *
 from authentication.device_auth import auth_required
+from .models import *
 
-class Albums(APIView):
+class AlbumsView(APIView):
   parser_classes = (parsers.MultiPartParser, parsers.FormParser,) 
   serializer_class = AlbumSerializer
 
@@ -28,7 +29,7 @@ class Albums(APIView):
     else:
       return Response({"ERROR":"Access Denied"}, status=status.HTTP_404_NOT_FOUND)
   
-class Songs(APIView):
+class SongsView(APIView):
   parser_classes = (parsers.MultiPartParser, parsers.FormParser,) 
   serializer_class = SongsSerializer
 
@@ -47,7 +48,7 @@ class Songs(APIView):
 
 
 
-class SongLyrics(APIView):
+class SongLyricsView(APIView):
   parser_classes = (parsers.MultiPartParser, parsers.FormParser,) 
   serializer_class = SongsLyricsSerializer
 
@@ -58,7 +59,7 @@ class SongLyrics(APIView):
       if not song_lyrics:
         return Response({
           "ERROR":"404 NO DATA FOUND :("}, status=status.HTTP_404_NOT_FOUND)
-      songs_lyrics_serializer = SongsLyricsSerializer(songs, many=True,context={'device_key': device_auth}
+      songs_lyrics_serializer = SongsLyricsSerializer(song_lyrics, many=True,context={'device_key': device_auth}
 ).data
       return Response(songs_lyrics_serializer, status=status.HTTP_200_OK)
     else:

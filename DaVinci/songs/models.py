@@ -22,7 +22,7 @@ class Songs(models.Model):
   updated_on = models.DateField(auto_now_add=True)
 
   def __str__(self):
-      return self.album_name
+      return self.song_name
 
 class SongLyrics(models.Model):
   album = models.ForeignKey(Albums, on_delete=models.CASCADE, related_name='Song_Lyrics_fk', null=True)
