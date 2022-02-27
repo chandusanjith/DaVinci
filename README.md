@@ -5,6 +5,8 @@ Api documentation
 ***
 https://chandusanjith.pythonanywhere.com/playground/
 
+https://chandusanjith.pythonanywhere.com/docs/
+
 ***
 Initialzer api's for privacy policy, about etc...
 
