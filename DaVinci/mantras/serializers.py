@@ -18,7 +18,7 @@ class MantraSerializer(serializers.ModelSerializer):
     auth_key = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Mantra
-        fields = ('id','album','mantra_image','mantra_name','artist','media_file','mantra_url','created_on','updated_on','auth_key')
+        fields = ('id','album','mantra_image','mantra_name','artist','media_file','mantra_url','mantra_url','created_on','updated_on','auth_key')
 
     def get_auth_key(self,request):
       device_key = self.context.get("device_key")

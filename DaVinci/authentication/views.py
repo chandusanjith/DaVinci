@@ -22,7 +22,7 @@ class DeviceLogin(APIView):
         app_version = AppParameters.objects.filter(parameter_name="APP_VERSION").first()
         app_force_update = AppParameters.objects.filter(parameter_name="FORCE_UPDATE").first()
         mapped_key = DeviceAuth.objects.filter(device_key = device_auth).first()
-        return Response({"Auth_key":mapped_key.mapped_key,
+        return Response({"auth_key":mapped_key.mapped_key,
                         "app_version":app_version.parameter_value,
                         "app_force_update":app_force_update.parameter_value,
                         "user_type_old":"OLD_USER"}, status=status.HTTP_200_OK)
@@ -33,7 +33,7 @@ class DeviceLogin(APIView):
          app_version = AppParameters.objects.filter(parameter_name="APP_VERSION").first()
          app_force_update = AppParameters.objects.filter(parameter_name="FORCE_UPDATE").first()
          mapped_key = DeviceAuth.objects.filter(device_key = device_auth).first()
-         return Response({"Auth_key":mapped_key.mapped_key,
+         return Response({"auth_key":mapped_key.mapped_key,
                         "app_version":app_version.parameter_value,
                         "app_force_update":app_force_update.parameter_value,
                         "user_type_new":"NEW_USER"}, status=status.HTTP_200_OK)

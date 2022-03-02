@@ -17,7 +17,9 @@ class Mantra(models.Model):
   mantra_name = models.CharField(max_length=40, default=" ")
   artist = models.CharField(max_length=40, default=" ")
   media_file = models.FileField(upload_to='mantra_mp3/', blank=True, null=True)
-  mantra_url = models.CharField(max_length=200, default=" ")
+  mantra_url = models.CharField(max_length=2000, default=" ")
+  firebase_url = models.CharField(max_length=2000, default=" ")
+  crawl_required = models.BooleanField(default=False)
   created_on = models.DateField(auto_now_add=True)
   updated_on = models.DateField(auto_now_add=True)
 
