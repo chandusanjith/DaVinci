@@ -2,12 +2,16 @@ import json
 import random
 import string
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import parsers
 
 from .astrology import horoscope_info
+from .serializers import HoroscopeSerializer
 from django.core import serializers
 
 signs = [
@@ -19,7 +23,13 @@ days = [
     'today', 'tomorrow', 'yesterday'
 ]
 
+
 class Horoscope(APIView):
+  serializer_class = HoroscopeSerializer
+
+  def get_serializer_class(self):
+    return self.serializer_class
+  
   def post(self, request, device_auth, format=None):
     
     sign = request.data['sign'].lower()
