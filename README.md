@@ -54,6 +54,9 @@ DaVinci Consumer Mobile API application built using Django Rest Framework
 python manage.py youtube_mantras_crawl
 python manage.py youtube_songs_crawl
 ```
+## Documentation
+[Api Doc](https://chandusanjith.pythonanywhere.com/docs/)
+[Api Playground](https://chandusanjith.pythonanywhere.com/playground/)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
