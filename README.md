@@ -1,25 +1,55 @@
 # DaVinci
+
 DaVinci Consumer Mobile API application built using Django Rest Framework
 
-Api documentation 
-***
-https://chandusanjith.pythonanywhere.com/playground/
+## Apps
 
-https://chandusanjith.pythonanywhere.com/docs/
+- Authentication
+- Horoscope
+- Songs
+- Mantras
+- Match Making
 
-***
-Initialzer api's for privacy policy, about etc...
 
-https://chandusanjith.pythonanywhere.com/DaVinci/ApiV1/Initializer/PrivacyPolicy/
+#### Authentication:
+#### Authenticate the device to use other apps.
+- GET /Authentication​/DeviceLogin​/{device_auth}​/
+- Device auth should be of 16 characters
 
-https://chandusanjith.pythonanywhere.com/DaVinci/ApiV1/Initializer/AboutUs/
+### Horoscope:
+#### Daily horoscope refers to predictions given for a day. Generally daily predictions are based on the Sun signs or the Zodiac signs. This method considers the position of the Sun in a particular zodiac sign at the time the person was born. A more precise method of writing daily horoscope is based on studying all the parameters of an individual’s birth chart including the movements of the fast and slow moving planets.
+- POST /Horoscope/CheckAstrology/{device_auth}/
+- Payload
 
-https://chandusanjith.pythonanywhere.com/DaVinci/ApiV1/Initializer/Terms/
+```json
+{
+ "day":"today",
+ "sign":"aries",
+ "timezone":"Asia/Kolkata"
+}
+```
+- Accepted signs = [
+    'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra',
+    'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+]
+-  Accepted days = [
+    'today', 'tomorrow', 'yesterday'
+]
 
-***
-Admin Site
+### Songs:
+#### Songs app to play devotional songs
+- GET /Songs/Albums/{device_auth}/ to get albums
+- GET /Songs/Songs/{album_id}/{device_auth}/ to get songs against album id
+- GET /Songs/SongLyrics/{album_id}/{device_auth}/ to get lyrics against album id
 
-https://chandusanjith.pythonanywhere.com/admin/
+### Mantras:
+#### Mantras app to play Mantras
+- GET /Mantras/MantrasAlbums/{device_auth}/ to get albums
+- GET /Mantras/Mantras/{album_id}/{device_auth}/ to get songs against album id
+- GET /Mantras/MantraLyrics/{album_id}/{device_auth}/ to get lyrics against album id
 
-userid: cs
-password: cs
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
