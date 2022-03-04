@@ -48,6 +48,12 @@ DaVinci Consumer Mobile API application built using Django Rest Framework
 - GET /Mantras/Mantras/{album_id}/{device_auth}/ to get songs against album id
 - GET /Mantras/MantraLyrics/{album_id}/{device_auth}/ to get lyrics against album id
 
+## Youtube Crawler
+##### Commands need to be executed in order to download youtube songs as mp3 and push the raw files to firebase. Link to firebase songs is stored in the models.
+```bash
+python manage.py youtube_mantras_crawl
+python manage.py youtube_songs_crawl
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
