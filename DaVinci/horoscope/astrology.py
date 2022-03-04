@@ -33,7 +33,6 @@ def horoscope_info(sign, day, tz=None):
     Endpoint to parse data from astrology site.
     """
     day = get_day_based_on_tz(day, tz)
-    print(22)
     base_url = "http://astrology.kudosmedia.net/m/"
     payload = {'day': str(day)}
     data = requests.get(str(base_url) + str(sign), params=payload)
