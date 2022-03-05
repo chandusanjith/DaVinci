@@ -14,6 +14,14 @@ from .models import *
 from datetime import date
 
 class DeviceLogin(APIView):
+  
+  def storeLoginDetails(self, device_key_ui):
+    device_instance = DeviceAuth.objects.filter(device_key=device_key_ui).first()
+    if DeviceLoginLog.objects.filter(device=device_instance, date=date.today()).exists():
+        data = DeviceLoginLog.objects.filter(device=device_instance, date=date.today()).first()
+        DeviceLoginLog.objects.filter(device=device_instance, date=date.today()).update(logged_count=data.logged_count + 1)
+    else:
+        DeviceLoginLog.objects.create(device=device_instance, logged_count=1)
 
   def get(self, request, device_auth,format=None):
      if len(device_auth) != 16:
