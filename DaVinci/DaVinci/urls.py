@@ -45,7 +45,6 @@ urlpatterns = [
     path('DaVinci/ApiV1/Authentication/', include('authentication.urls')),
     path('DaVinci/ApiV1/Horoscope/', include('horoscope.urls')),
     path('DaVinci/ApiV1/Songs/', include('songs.urls')),
-    path('DaVinci/ApiV1/Mantras/', include('mantras.urls')),
     path('DaVinci/ApiV1/Initializer/', include('initializer.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 # urlpatterns = format_suffix_patterns(urlpatterns)

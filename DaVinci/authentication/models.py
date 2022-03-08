@@ -14,8 +14,8 @@ class DeviceLoginLog(models.Model):
   logged_count = models.IntegerField(default=0)
   date = models.DateField(auto_now_add=True)
 
-    def __str__(self):
-        return str(self.device) + ': ' + str(self.date)
+  def __str__(self):
+      return str(self.device) + ': ' + str(self.date)
 
 class AppParameters(models.Model):
   parameter_name = models.CharField(max_length=100, default=" ")

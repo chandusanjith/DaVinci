@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'authentication',
     'horoscope',
     'initializer',
-    'mantras',
     'match_making',
     'songs'
 ]

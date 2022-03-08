@@ -26,8 +26,18 @@ class Songs(models.Model):
   def __str__(self):
       return self.song_name
 
+class LyricsAlbum(models.Model):
+  album_name = models.CharField(max_length=200, unique=True)
+  artist = models.CharField(max_length=200, unique=True)
+  album_cover_image = models.FileField(upload_to='lyric_album_cover_image/', blank=True, null=True)
+  created_on = models.DateField(auto_now_add=True)
+  updated_on = models.DateField(auto_now_add=True)
+  
+  def __str__(self):
+      return self.album_name
+
 class SongLyrics(models.Model):
-  album = models.ForeignKey(Albums, on_delete=models.CASCADE, related_name='Song_Lyrics_fk', null=True)
+  album = models.ForeignKey(LyricsAlbum, on_delete=models.CASCADE, related_name='Song_Lyrics_fk', null=True)
   song_lyric_image = models.FileField(upload_to='song_image/', blank=True, null=True)
   song_name = models.CharField(max_length=40, default=" ")
   artist = models.CharField(max_length=40, default=" ")

@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(Albums)
 admin.site.register(Songs)
 admin.site.register(SongLyrics)
+admin.site.register(LyricsAlbum)
