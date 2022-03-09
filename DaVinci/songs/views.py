@@ -40,7 +40,7 @@ class LyricsAlbumView(APIView):
       if not lyrics_albums:
         return Response({
           "ERROR":"404 NO DATA FOUND :("}, status=status.HTTP_404_NOT_FOUND)
-      lyrics_albums_serializer = LyricsAlbumSerializer(albums, many=True,context={'device_key': device_auth}
+      lyrics_albums_serializer = LyricsAlbumSerializer(lyrics_albums, many=True,context={'device_key': device_auth}
 ).data
       return Response(lyrics_albums_serializer, status=status.HTTP_200_OK)
     else:
@@ -71,7 +71,7 @@ class SongLyricsView(APIView):
 
   def get(self,request,album_id,device_auth,format=None):
     if auth_required(device_auth) == True:
-      album = Albums.objects.get(id=album_id)
+      album = LyricsAlbum.objects.get(id=album_id)
       song_lyrics = SongLyrics.objects.filter(album=album)
       if not song_lyrics:
         return Response({
