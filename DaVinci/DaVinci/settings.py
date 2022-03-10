@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'horoscope',
     'initializer',
     'match_making',
-    'songs'
+    'songs',
+    'feedback',
+    'language_translator' 
 ]
 
 MIDDLEWARE = [

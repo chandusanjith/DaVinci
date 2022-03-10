@@ -1,7 +1,9 @@
 import json
 import random
 import string
+import os
 
+from threading import Thread
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -81,3 +83,13 @@ class SongLyricsView(APIView):
       return Response(songs_lyrics_serializer, status=status.HTTP_200_OK)
     else:
       return Response({"ERROR":"Access Denied"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class TriggerYoutubeCrawlerJobView(APIView):
+
+  def crawl_youtube(msg):
+    os.system("python manage.py youtube_song_crawl")
+  
+  def get(self,request,format=None):
+    Thread(target=self.crawl_youtube, args=("")).start()
+    return Response({"Message": "O.K."}, status=status.HTTP_200_OK)

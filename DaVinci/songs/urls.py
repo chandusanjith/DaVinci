@@ -7,4 +7,5 @@ urlpatterns = [
     path('LyricAlbums/<device_auth>/', LyricsAlbumView.as_view(), name='get_lyrics_albums'),
     path('DevotionalSongs/<album_id>/<device_auth>/', SongsView.as_view(), name='get_songs'),
     path('SongLyrics/<album_id>/<device_auth>/', SongLyricsView.as_view(), name='get_song_lyrics'),
+    path('TriggerYoutubeCrawler/', TriggerYoutubeCrawlerJobView.as_view(), name='triggger_youtube_crawler_job'),
 ]

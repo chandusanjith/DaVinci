@@ -10,6 +10,7 @@ from rest_framework import parsers
 from django.core import serializers
 
 from .models import *
+from .serializers import DeviceAuthSerializer,DeviceLoginLogSerializer
 
 from datetime import date
 
@@ -30,6 +31,7 @@ class DeviceLogin(APIView):
         app_version = AppParameters.objects.filter(parameter_name="APP_VERSION").first()
         app_force_update = AppParameters.objects.filter(parameter_name="FORCE_UPDATE").first()
         mapped_key = DeviceAuth.objects.filter(device_key = device_auth).first()
+        self.storeLoginDetails(device_auth)
         return Response({"auth_key":mapped_key.mapped_key,
                         "app_version":app_version.parameter_value,
                         "app_force_update":app_force_update.parameter_value,
@@ -41,7 +43,40 @@ class DeviceLogin(APIView):
          app_version = AppParameters.objects.filter(parameter_name="APP_VERSION").first()
          app_force_update = AppParameters.objects.filter(parameter_name="FORCE_UPDATE").first()
          mapped_key = DeviceAuth.objects.filter(device_key = device_auth).first()
+         self.storeLoginDetails(device_auth)
          return Response({"auth_key":mapped_key.mapped_key,
                         "app_version":app_version.parameter_value,
                         "app_force_update":app_force_update.parameter_value,
                         "user_type_new":"NEW_USER"}, status=status.HTTP_200_OK)
+
+class DeviceMappingsView(APIView):
+  serializer_class = DeviceAuthSerializer
+
+  def get(self, request,format=None):
+    try:
+      device_mapping_details = DeviceAuth.objects.all()
+      if not device_mapping_details:
+        return Response({
+          "ERROR":"404 NO DATA FOUND :("}, status=status.HTTP_404_NOT_FOUND)
+      device_mapping_serializer = DeviceAuthSerializer(device_mapping_details, many=True
+).data
+      return Response(device_mapping_serializer, status=status.HTTP_200_OK)
+    except Exception as e:
+      return Response({
+          "ERROR":"OOps!! something went wrong!!"}, status=status.HTTP_404_NOT_FOUND)
+
+class DeviceActivityView(APIView):
+  serializer_class = DeviceLoginLogSerializer
+
+  def get(self, request,format=None):
+    try:
+      device_login_details = DeviceLoginLog.objects.all()
+      if not device_login_details:
+        return Response({
+          "ERROR":"404 NO DATA FOUND :("}, status=status.HTTP_404_NOT_FOUND)
+      device_login_serializer = DeviceLoginLogSerializer(device_login_details, many=True
+).data
+      return Response(device_login_serializer, status=status.HTTP_200_OK)
+    except Exception as e:
+      return Response({
+          "ERROR":"OOps!! something went wrong!!"}, status=status.HTTP_404_NOT_FOUND)

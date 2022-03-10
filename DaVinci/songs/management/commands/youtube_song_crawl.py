@@ -8,6 +8,7 @@ from django.core.management.base import BaseCommand
 
 from DaVinci.settings import *
 from songs.models import *
+from authentication.models import AppParameters
 
 config = {
   "apiKey": "AIzaSyBdRvNasADoiVlswGJWZOVlPH443Hs1yz4",
@@ -68,18 +69,24 @@ class Command(BaseCommand):
         print(e)
   
     def handle(self, *args, **options):
-      print("Running youtube crawler for Songs App!!!!")
-      songs_which_need_to_be_crwaled = Songs.objects.filter(crawl_required=True)
-      if len(songs_which_need_to_be_crwaled) == 0:
-        print("No eligible songs to crawl !!!!!")
+      if AppParameters.objects.get(parameter_name="CRAWLER_INSTANCES_COUNT").parameter_value == '0':
+        AppParameters.objects.filter(parameter_name="CRAWLER_INSTANCES_COUNT").update(parameter_value='1')
+        print("Running youtube crawler for Songs App!!!!")
+        songs_which_need_to_be_crwaled = Songs.objects.filter(crawl_required=True)
+        if len(songs_which_need_to_be_crwaled) == 0:
+          print("No eligible songs to crawl !!!!!")
+        else:
+          print("Songs Found!!!!")
+          for songs in songs_which_need_to_be_crwaled:
+            filename = self.download_youtube_to_mp3(songs.song_url)
+            if filename != False:
+              print(filename)
+              url = self.push_song_to_firebase(filename[6:])
+              if url != False:
+                self.update_url(songs.id, url, filename)
+            else:
+              print("Will try for other song!!!!")
+        AppParameters.objects.filter(parameter_name="CRAWLER_INSTANCES_COUNT").update(parameter_value='0')
       else:
-        print("Songs Found!!!!")
-        for songs in songs_which_need_to_be_crwaled:
-          filename = self.download_youtube_to_mp3(songs.song_url)
-          if filename != False:
-            print(filename)
-            url = self.push_song_to_firebase(filename[6:])
-            if url != False:
-              self.update_url(songs.id, url, filename)
-          else:
-            print("Will try for other song!!!!")
+        print("Already other instance running!, Aborting..........")
+      
