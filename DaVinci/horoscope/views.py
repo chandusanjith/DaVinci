@@ -38,10 +38,10 @@ class Horoscope(APIView):
   
   def post(self, request, device_auth, format=None):
     if auth_required(device_auth) == True:
-      sign = request.data['sign'].lower()
-      day = request.data['day'].lower()
-      timezone = request.data['timezone']
-      language = request.data['language']
+      sign = request.data[0]['sign'].lower()
+      day = request.data[0]['day'].lower()
+      timezone = request.data[0]['timezone']
+      language = request.data[0]['language']
       try:
           if language not in languages:
              return Response({"ERROR":"Improper Language"}, status=status.HTTP_404_NOT_FOUND)
