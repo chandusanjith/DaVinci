@@ -7,7 +7,6 @@ DaVinci Consumer Mobile API application built using Django Rest Framework
 - Authentication
 - Horoscope
 - Songs
-- Mantras
 - Match Making
 
 
@@ -25,7 +24,8 @@ DaVinci Consumer Mobile API application built using Django Rest Framework
 {
  "day":"today",
  "sign":"aries",
- "timezone":"Asia/Kolkata"
+ "timezone":"Asia/Kolkata",
+ "language":"default"
 }
 ```
 - Accepted signs = [
@@ -41,12 +41,6 @@ DaVinci Consumer Mobile API application built using Django Rest Framework
 - GET /Songs/Albums/{device_auth}/ to get albums
 - GET /Songs/Songs/{album_id}/{device_auth}/ to get songs against album id
 - GET /Songs/SongLyrics/{album_id}/{device_auth}/ to get lyrics against album id
-
-### Mantras:
-#### Mantras app to play Mantras
-- GET /Mantras/MantrasAlbums/{device_auth}/ to get albums
-- GET /Mantras/Mantras/{album_id}/{device_auth}/ to get songs against album id
-- GET /Mantras/MantraLyrics/{album_id}/{device_auth}/ to get lyrics against album id
 
 ## Youtube Crawler
 ##### Commands need to be executed in order to download youtube songs as mp3 and push the raw files to firebase. Link to firebase songs is stored in the models.
