@@ -10,6 +10,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import parsers
 
+from django.shortcuts import render
+from django.views.generic import View
+
 from language_translator.views import _translate
 from .astrology import horoscope_info
 from .serializers import HoroscopeUsersLogSerializer
@@ -35,13 +38,14 @@ class Horoscope(APIView):
 
   def get_serializer_class(self):
     return self.serializer_class
-  
+
   def post(self, request, device_auth, format=None):
     if auth_required(device_auth) == True:
-      sign = request.data[0]['sign'].lower()
-      day = request.data[0]['day'].lower()
-      timezone = request.data[0]['timezone']
-      language = request.data[0]['language']
+      print(request.data['nameValuePairs']['device'])
+      sign = request.data['nameValuePairs']['sign'].lower()
+      day = request.data['nameValuePairs']['day'].lower()
+      timezone = request.data['nameValuePairs']['timezone']
+      language = request.data['nameValuePairs']['language']
       try:
           if language not in languages:
              return Response({"ERROR":"Improper Language"}, status=status.HTTP_404_NOT_FOUND)
@@ -82,3 +86,40 @@ class GetHoroscopeLog(APIView):
     except Exception as e:
       return Response({
           "ERROR":"OOps!! something went wrong!!"}, status=status.HTTP_404_NOT_FOUND)
+
+class HoroscopeWeb(View):
+  def get(self, *args, **kwargs):
+    if auth_required(kwargs['device_auth']) == True:
+      device_auth = kwargs['device_auth']
+      sign = kwargs['sign'].lower()
+      day = kwargs['day'].lower()
+      timezone = 'Asia/Kolkata'
+      language = kwargs['language']
+      try:
+          if language not in languages:
+             return render(self.request, 'horoscope.html', {"MESSAGE":"Improper Language"})
+          if (sign not in signs) or (day not in days):
+              return render(self.request, 'horoscope.html', {"MESSAGE":"Improper sign or day"})
+          response = horoscope_info(sign=sign, day=day, tz=timezone)
+          if language == "kn":
+            resp_context = {}
+            tranlated_response = _translate(response, language)
+            resp_context['kannada'] = tranlated_response
+          elif language == "default":
+            resp_context = {}
+            resp_context['english']=response
+            response = _translate(response, "kn")
+            resp_context['kannada']= response
+          else:
+            resp_context = {}
+            resp_context['english'] = response
+
+          log = HoroscopeUsersLog(device_key =device_auth, day = day, sign=sign, timezone=timezone, language=language, out_message =resp_context)
+          log.save()
+          return render(self.request, 'horoscope.html', resp_context)
+      except Exception as e:
+          log = HoroscopeUsersLog(device_key =device_auth, day = day, sign=sign, timezone=timezone, language=language, out_message =e)
+          log.save()
+          return render(self.request, 'horoscope.html', {"MESSAGE":"OOps! something went wrong!!"})
+    else:
+        return render(self.request, 'horoscope.html', {"MESSAGE":"Access Denied"})

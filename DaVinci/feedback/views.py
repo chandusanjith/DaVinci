@@ -18,8 +18,9 @@ from .models import *
 
 class AddFeedbackView(APIView):
     def post(self, request, format=None):
-        if auth_required(request.data[0]['device']) == True:
-            serializer = FeedbackSerializer(data=request.data[0])
+        print(request.data['nameValuePairs']['device'])
+        if auth_required(request.data['nameValuePairs']['device']) == True:
+            serializer = FeedbackSerializer(data=request.data['nameValuePairs'])
             if serializer.is_valid():
                 serializer.save()
                 return Response({"Message":"O.K."}, status=status.HTTP_200_OK)
